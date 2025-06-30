@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { CountriesType, CountryType } from "../types";
 import { useQuery } from "@apollo/client";
-import { LIST_COUNTRIES } from "../api/example";
+import { LIST_COUNTRIES } from "../api/queries";
 
 export function HomePage() {
     const { data, loading, error } = useQuery<CountriesType>(LIST_COUNTRIES);
@@ -12,18 +11,14 @@ export function HomePage() {
         return <div>Error</div>;
     }
 
-    useEffect(() => {
-        console.log("data", data);
-    }, [data]);
-
     return (
         <div>
             {data && (
                 <ul>
-                    {data?.countries?.map((country: CountryType) => (
+                    {data?.countries?.map((c: CountryType) => (
                         <li>
-                            <div>{country.name}</div>
-                            <div>{country.emoji}</div>
+                            <div>{c.country.name}</div>
+                            <div>{c.country.emoji}</div>
                         </li>
                     ))}
                 </ul>
