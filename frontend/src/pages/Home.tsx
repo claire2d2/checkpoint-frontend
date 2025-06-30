@@ -27,7 +27,7 @@ export function HomePage() {
         <div>
             <AddCountryForm setNbCountriesAdded={setNbCountriesAdded} />
             {data && (
-                <ul className="grid grid-cols-8">
+                <ul className=" grid grid-cols-2 md:grid-cols-8">
                     {data?.countries?.map((c: CountryType) => (
                         <CountryCard country={c} />
                     ))}

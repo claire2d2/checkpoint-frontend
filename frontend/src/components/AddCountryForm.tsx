@@ -82,7 +82,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                 onSubmit={(e) => handleSubmit(e, data)}
                 className="flex flex-col gap-3 items-center"
             >
-                <div className="w-full flex gap-2">
+                <div className="w-full flex flex-col md:flex-row gap-2">
                     <label htmlFor="name" className="w-1/12">
                         Name:
                     </label>
@@ -94,7 +94,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                         placeholder="Country's name"
                     />
                 </div>
-                <div className="w-full flex gap-2">
+                <div className="w-full flex flex-col md:flex-row gap-2">
                     <label htmlFor="emoji" className="w-1/12">
                         Emoji:
                     </label>
@@ -106,7 +106,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                         placeholder="Country's emoji"
                     />
                 </div>
-                <div className="w-full flex gap-2">
+                <div className="w-full flex flex-col md:flex-row gap-2">
                     <label htmlFor="code" className="w-1/12">
                         Code:
                     </label>
@@ -118,7 +118,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                         placeholder="Country's code "
                     />
                 </div>
-                <div className="w-full flex gap-2">
+                <div className="w-full flex flex-col md:flex-row gap-2">
                     <label htmlFor="continent" className="w-1/12">
                         Continent:{" "}
                     </label>
