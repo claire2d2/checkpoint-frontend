@@ -5,6 +5,8 @@ import { CreateCountryType } from "../types";
 import { LIST_CONTINENTS } from "../api/queries";
 import { ContinentsType } from "../types";
 import { ADD_COUNTRY } from "../api/mutations";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface AddCountryFormProps {
     setNbCountriesAdded: React.Dispatch<React.SetStateAction<number>>;
@@ -68,23 +70,24 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
 
     return (
         <div>
+            <h3>Add a country:</h3>
             <form onSubmit={(e) => handleSubmit(e, data)}>
                 <label htmlFor="name">Name:</label>
-                <input
+                <Input
                     type="text"
                     name="name"
                     value={data.name}
                     onChange={handleChange}
                 />
                 <label htmlFor="emoji">Emoji:</label>
-                <input
+                <Input
                     type="text"
                     name="emoji"
                     value={data.emoji}
                     onChange={handleChange}
                 />
                 <label htmlFor="code">Code:</label>
-                <input
+                <Input
                     type="text"
                     name="code"
                     value={data.code}
@@ -104,7 +107,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                         </option>
                     ))}
                 </select>
-                <button
+                <Button
                     type="submit"
                     disabled={
                         data.code === "" ||
@@ -114,7 +117,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                     }
                 >
                     Submit
-                </button>
+                </Button>
                 {errorMessage && <div>{errorMessage}</div>}
             </form>
         </div>
