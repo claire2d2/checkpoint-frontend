@@ -1,10 +1,20 @@
+import { useState, useEffect } from "react";
 import { CountriesType, CountryType } from "../types";
 import { useQuery } from "@apollo/client";
 import { LIST_COUNTRIES } from "../api/queries";
 import { AddCountryForm } from "../components/AddCountryForm";
 
 export function HomePage() {
-    const { data, loading, error } = useQuery<CountriesType>(LIST_COUNTRIES);
+    const [nbCountriesAdded, setNbCountriesAdded] = useState<number>(0);
+
+    const { data, loading, error, refetch } =
+        useQuery<CountriesType>(LIST_COUNTRIES);
+
+    useEffect(() => {
+        refetch();
+        console.log("nbCountriesAdded", nbCountriesAdded);
+    }, [nbCountriesAdded]);
+
     if (loading) {
         return <div>Loading ...</div>;
     }
@@ -14,7 +24,7 @@ export function HomePage() {
 
     return (
         <div>
-            <AddCountryForm />
+            <AddCountryForm setNbCountriesAdded={setNbCountriesAdded} />
             {data && (
                 <ul>
                     {data?.countries?.map((c: CountryType) => (

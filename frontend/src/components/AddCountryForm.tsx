@@ -6,17 +6,22 @@ import { LIST_CONTINENTS } from "../api/queries";
 import { ContinentsType } from "../types";
 import { ADD_COUNTRY } from "../api/mutations";
 
-export function AddCountryForm() {
-    const { data: continentsData } = useQuery<ContinentsType>(LIST_CONTINENTS);
+interface AddCountryFormProps {
+    setNbCountriesAdded: React.Dispatch<React.SetStateAction<number>>;
+}
 
-    const [data, setData] = useState<CreateCountryType>({
+export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
+    const { data: continentsData } = useQuery<ContinentsType>(LIST_CONTINENTS);
+    const initialData = {
         code: "",
         continent: {
             id: 0,
         },
         emoji: "",
         name: "",
-    });
+    };
+    const [data, setData] = useState<CreateCountryType>(initialData);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     useEffect(() => {
         console.log("data", data);
@@ -38,11 +43,22 @@ export function AddCountryForm() {
         values: any
     ) => {
         e.preventDefault();
+        if (
+            data.code === "" ||
+            data.name === "" ||
+            data.emoji === "" ||
+            data.continent.id === 0
+        ) {
+            setErrorMessage("Please fill in all the fields");
+            return;
+        }
         // const values = Object.fromEntries(formData) as any;
         addCountry({
             variables: { data: values },
             onCompleted: async () => {
                 console.log("Country created");
+                setNbCountriesAdded((prev) => prev + 1);
+                setData(initialData);
             },
         });
         if (error) {
@@ -79,13 +95,27 @@ export function AddCountryForm() {
                     value={data.continent.id}
                     onChange={handleChange}
                 >
+                    <option value={0} selected disabled>
+                        Select a continent
+                    </option>
                     {continentsData?.continents?.map((continent) => (
                         <option key={continent.id} value={continent.id}>
                             {continent.name}
                         </option>
                     ))}
                 </select>
-                <button type="submit">Submit</button>
+                <button
+                    type="submit"
+                    disabled={
+                        data.code === "" ||
+                        data.name === "" ||
+                        data.emoji === "" ||
+                        data.continent.id === 0
+                    }
+                >
+                    Submit
+                </button>
+                {errorMessage && <div>{errorMessage}</div>}
             </form>
         </div>
     );
