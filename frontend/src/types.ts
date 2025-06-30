@@ -1,10 +1,17 @@
 export type CountryType = {
-    country: {
+    id: number;
+    code: string;
+    name: string;
+    emoji: string;
+    continent: ContinentType;
+};
+
+export type CreateCountryType = {
+    code: string;
+    name: string;
+    emoji: string;
+    continent: {
         id: number;
-        code: string;
-        name: string;
-        emoji: string;
-        continent: ContinentType;
     };
 };
 export type CountriesType = {
@@ -13,4 +20,8 @@ export type CountriesType = {
 export type ContinentType = {
     id: number;
     name: string;
+};
+
+export type ContinentsType = {
+    continents: ContinentType[];
 };

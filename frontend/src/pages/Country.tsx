@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { CountryType } from "../types";
 import { FIND_COUNTRY } from "../api/queries";
-
+type CountryData = {
+    country: CountryType;
+};
 export function Country() {
     const params = useParams();
-    const { data, loading, error, refetch } = useQuery<CountryType>(
+    const { data, loading, error, refetch } = useQuery<CountryData>(
         FIND_COUNTRY,
         {
             variables: { code: params.id },
