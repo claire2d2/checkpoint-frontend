@@ -5,7 +5,9 @@ export type CountryType = {
     emoji: string;
     continent: ContinentType;
 };
-
+export type CountriesType = {
+    countries: CountryType[];
+};
 export type ContinentType = {
     id: number;
     name: string;
