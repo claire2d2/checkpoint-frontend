@@ -123,8 +123,8 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                         Continent:{" "}
                     </label>
                     <Select
-                        value={data.continent.id}
-                        onValueChange={(value: number) =>
+                        value={String(data.continent.id)}
+                        onValueChange={(value: string) =>
                             setData((prevData) => ({
                                 ...prevData,
                                 continent: { id: Number(value) },
@@ -139,7 +139,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                             {continentsData?.continents?.map((continent) => (
                                 <SelectItem
                                     key={continent.id}
-                                    value={continent.id}
+                                    value={String(continent.id)}
                                 >
                                     {continent.name}
                                 </SelectItem>
