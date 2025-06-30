@@ -7,6 +7,13 @@ import { ContinentsType } from "../types";
 import { ADD_COUNTRY } from "../api/mutations";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select";
 
 interface AddCountryFormProps {
     setNbCountriesAdded: React.Dispatch<React.SetStateAction<number>>;
@@ -17,7 +24,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
     const initialData = {
         code: "",
         continent: {
-            id: 0,
+            id: "",
         },
         emoji: "",
         name: "",
@@ -36,7 +43,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
         const { name, value } = event.target;
         setData((prevData) => ({
             ...prevData,
-            [name]: name === "continent" ? { id: Number(value) } : value,
+            [name]: value,
         }));
     };
 
@@ -69,45 +76,79 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
     };
 
     return (
-        <div>
-            <h3>Add a country:</h3>
-            <form onSubmit={(e) => handleSubmit(e, data)}>
-                <label htmlFor="name">Name:</label>
-                <Input
-                    type="text"
-                    name="name"
-                    value={data.name}
-                    onChange={handleChange}
-                />
-                <label htmlFor="emoji">Emoji:</label>
-                <Input
-                    type="text"
-                    name="emoji"
-                    value={data.emoji}
-                    onChange={handleChange}
-                />
-                <label htmlFor="code">Code:</label>
-                <Input
-                    type="text"
-                    name="code"
-                    value={data.code}
-                    onChange={handleChange}
-                />
-                <select
-                    name="continent"
-                    value={data.continent.id}
-                    onChange={handleChange}
-                >
-                    <option value={0} selected disabled>
-                        Select a continent
-                    </option>
-                    {continentsData?.continents?.map((continent) => (
-                        <option key={continent.id} value={continent.id}>
-                            {continent.name}
-                        </option>
-                    ))}
-                </select>
+        <div className="flex flex-col gap-2 my-3">
+            <h3 className="font-semibold">Add a country:</h3>
+            <form
+                onSubmit={(e) => handleSubmit(e, data)}
+                className="flex flex-col gap-3 items-center"
+            >
+                <div className="w-full flex gap-2">
+                    <label htmlFor="name" className="w-1/12">
+                        Name:
+                    </label>
+                    <Input
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        onChange={handleChange}
+                        placeholder="Country's name"
+                    />
+                </div>
+                <div className="w-full flex gap-2">
+                    <label htmlFor="emoji" className="w-1/12">
+                        Emoji:
+                    </label>
+                    <Input
+                        type="text"
+                        name="emoji"
+                        value={data.emoji}
+                        onChange={handleChange}
+                        placeholder="Country's emoji"
+                    />
+                </div>
+                <div className="w-full flex gap-2">
+                    <label htmlFor="code" className="w-1/12">
+                        Code:
+                    </label>
+                    <Input
+                        type="text"
+                        name="code"
+                        value={data.code}
+                        onChange={handleChange}
+                        placeholder="Country's code "
+                    />
+                </div>
+                <div className="w-full flex gap-2">
+                    <label htmlFor="continent" className="w-1/12">
+                        Continent:{" "}
+                    </label>
+                    <Select
+                        value={data.continent.id}
+                        onValueChange={(value: number) =>
+                            setData((prevData) => ({
+                                ...prevData,
+                                continent: { id: Number(value) },
+                            }))
+                        }
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a continent" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            // <option value={0} selected disabled></option>
+                            {continentsData?.continents?.map((continent) => (
+                                <SelectItem
+                                    key={continent.id}
+                                    value={continent.id}
+                                >
+                                    {continent.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
                 <Button
+                    className="w-1/4"
                     type="submit"
                     disabled={
                         data.code === "" ||

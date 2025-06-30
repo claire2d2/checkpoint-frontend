@@ -11,7 +11,7 @@ export type CreateCountryType = {
     name: string;
     emoji: string;
     continent: {
-        id: number;
+        id: number | string;
     };
 };
 export type CountriesType = {

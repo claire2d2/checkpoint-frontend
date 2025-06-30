@@ -3,6 +3,7 @@ import { CountriesType, CountryType } from "../types";
 import { useQuery } from "@apollo/client";
 import { LIST_COUNTRIES } from "../api/queries";
 import { AddCountryForm } from "../components/AddCountryForm";
+import { CountryCard } from "../components/CountryCard";
 
 export function HomePage() {
     const [nbCountriesAdded, setNbCountriesAdded] = useState<number>(0);
@@ -26,12 +27,9 @@ export function HomePage() {
         <div>
             <AddCountryForm setNbCountriesAdded={setNbCountriesAdded} />
             {data && (
-                <ul>
+                <ul className="grid grid-cols-8">
                     {data?.countries?.map((c: CountryType) => (
-                        <li key={c.id}>
-                            <div>{c.name}</div>
-                            <div>{c.emoji}</div>
-                        </li>
+                        <CountryCard country={c} />
                     ))}
                 </ul>
             )}

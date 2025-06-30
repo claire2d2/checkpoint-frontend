@@ -5,7 +5,7 @@ export function PageLayout() {
     return (
         <div>
             <Header />
-            <main>
+            <main className="mx-5">
                 <Outlet />
             </main>
         </div>
