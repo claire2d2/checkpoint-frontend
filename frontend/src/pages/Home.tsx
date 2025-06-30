@@ -16,17 +16,18 @@ export function HomePage() {
         console.log("nbCountriesAdded", nbCountriesAdded);
     }, [nbCountriesAdded]);
 
-    if (loading) {
-        return <div>Loading ...</div>;
-    }
     if (error) {
-        return <div>Error</div>;
+        return <div>There was an error. Please refresh the page.</div>;
     }
 
     return (
         <div>
-            <AddCountryForm setNbCountriesAdded={setNbCountriesAdded} />
-            {data && (
+            <AddCountryForm
+                setNbCountriesAdded={setNbCountriesAdded}
+                loading={loading}
+            />
+            {loading && <div>Loading...</div>}
+            {data && !loading && (
                 <ul className=" grid grid-cols-2 md:grid-cols-8">
                     {data?.countries?.map((c: CountryType) => (
                         <CountryCard country={c} />

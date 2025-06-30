@@ -17,9 +17,13 @@ import {
 
 interface AddCountryFormProps {
     setNbCountriesAdded: React.Dispatch<React.SetStateAction<number>>;
+    loading: boolean;
 }
 
-export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
+export function AddCountryForm({
+    setNbCountriesAdded,
+    loading,
+}: AddCountryFormProps) {
     const { data: continentsData } = useQuery<ContinentsType>(LIST_CONTINENTS);
     const initialData = {
         code: "",
@@ -151,6 +155,7 @@ export function AddCountryForm({ setNbCountriesAdded }: AddCountryFormProps) {
                     className="w-1/4"
                     type="submit"
                     disabled={
+                        loading ||
                         data.code === "" ||
                         data.name === "" ||
                         data.emoji === "" ||
